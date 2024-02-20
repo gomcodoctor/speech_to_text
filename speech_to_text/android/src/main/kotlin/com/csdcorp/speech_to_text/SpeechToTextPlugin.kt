@@ -118,7 +118,7 @@ public class SpeechToTextPlugin :
     private var minRms: Float = 1000.0F
     private var maxRms: Float = -100.0F
     private val handler: Handler = Handler(Looper.getMainLooper())
-    private val defaultLanguageTag: String? = null
+    private var defaultLanguageTag: String? = null
     
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
@@ -219,7 +219,7 @@ public class SpeechToTextPlugin :
                                 "listenMode is required", null)
                         return
                     }
-                    startListening(result, localeId, partialResults, listenModeIndex, onDevice )
+                    startListening(result, localeId!!, partialResults, listenModeIndex, onDevice )
                 }
                 "stop" -> stopListening(result)
                 "cancel" -> cancelListening(result)
