@@ -118,7 +118,8 @@ public class SpeechToTextPlugin :
     private var minRms: Float = 1000.0F
     private var maxRms: Float = -100.0F
     private val handler: Handler = Handler(Looper.getMainLooper())
-    private val defaultLanguageTag: String = Locale.getDefault().toLanguageTag()
+    private val defaultLanguageTag: String? = null
+    
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
 
@@ -176,6 +177,7 @@ public class SpeechToTextPlugin :
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull rawrResult: Result) {
         val result = ChannelResultWrapper(rawrResult)
+        defaultLanguageTag = Locale.getDefault().toLanguageTag()
         try {
             when (call.method) {
                 "has_permission" -> hasPermission(result)
@@ -640,7 +642,7 @@ public class SpeechToTextPlugin :
         debugLog("after setup intent")
     }
 
-    private fun setupRecognizerIntent(languageTag: String, partialResults: Boolean, listenMode: ListenMode, onDevice: Boolean ) {
+    private fun setupRecognizerIntent(languageTag: String?, partialResults: Boolean, listenMode: ListenMode, onDevice: Boolean ) {
         debugLog("setupRecognizerIntent")
         if (previousRecognizerLang == null ||
                 previousRecognizerLang != languageTag ||
